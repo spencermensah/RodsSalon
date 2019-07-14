@@ -1,24 +1,38 @@
 import React, { Component } from "react";
 import './App.css';
 import * as moment from 'moment'
+import AlertDialog from './Modal'
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      date: null
+      date: []
     }
   }
 
   componentDidMount(){
-    this.setState({date: moment().format('DD/MM/YYYY')})
+
+
   }
 
   render() {
+    for (var i = 0; i < 13; i++) {
+      const currentDate = moment()
+
+      const dateAhead = moment(currentDate).add(i, 'days')
+      const formattedDate = dateAhead.format('dddd, MMMM Do YYYY')
+      this.state.date.push(formattedDate)
+
+    }
       return (
       <div className="App">
-        <h1>{this.state.date}</h1>
+        {this.state.date.map((dates, i) =>
+          <AlertDialog
+            date = {this.state.date[i]}
+            />
+        )}
       </div>
     );
   }
